@@ -1,6 +1,8 @@
+import sys
+
 from linkedQFile import LinkedQ
 
-usr_promt = input('Skriv nummren på korten separerade med mellanslag: ' ).split() # Användarinmatning som sparas till en lista separerad med mellanslag
+usr_promt = sys.stdin.readline().split() # Användarinmatning som sparas till en lista separerad med mellanslag
 
 q = LinkedQ() # Skapar en tom array
 

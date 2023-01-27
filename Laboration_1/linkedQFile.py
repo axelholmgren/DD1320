@@ -1,7 +1,7 @@
 class Node:
     # Skapar en Node med ett värde och en pekare till nästa nod.
     def __init__(self, value):
-        self.value = value #Attribut av datatyp integer
+        self.value = value #Attribut av datatyp string
         self.next = None  #Attribut av klassen Node
 
 
