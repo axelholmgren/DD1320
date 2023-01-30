@@ -92,8 +92,7 @@ def poke_search(name, list):
         if list[i].get_name() == name:
             return print(i)
     else:
-        return print('Not found')
-        
+        return print("Not found")
 
 
 a = Pokemons("Bulbasaur", "Grass", "Poison", 318, 45, 49, 49, 65, 65, 45, 1, False)
@@ -103,4 +102,4 @@ b = Pokemons("Ivysaur", "Grass", "Poison", 405, 60, 62, 63, 80, 80, 60, 1, False
 # b.switch_HP_attack()
 # print(b)
 # print(poke_create_list())
-poke_search('Ivysaur', poke_create_list())
+poke_search("Ivysaur", poke_create_list())
