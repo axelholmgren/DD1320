@@ -21,3 +21,32 @@ class Node:
         self.value = value
         self.left = None
         self.right = None
+
+def putta(nod, newvalue):
+    if nod == None:
+        return Node(newvalue)
+    if newvalue == nod.value:   
+        return nod
+    if newvalue < nod.value:
+        nod.left = putta(nod.left,newvalue)
+        return nod
+    if newvalue > nod.value:
+        nod.right = putta(nod.right,newvalue)
+        return nod
+
+def finns(nod,value):
+    if nod == None: 
+        return False
+    if value == nod.value: 
+        return True
+    if value < nod.value: 
+        return finns(nod.left,value)
+    if value > nod.value: 
+        return finns(nod.right,value)
+
+
+def skriv(nod):
+    if nod != None:
+        skriv(nod.left)
+        print(nod.value)
+        skriv(nod.right)
