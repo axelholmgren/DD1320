@@ -47,8 +47,7 @@ def finns(nod,value):
         return True
     if value < nod.value:                               # Om värdet är mindre än värdet på noden kallas funktionen rekursivt och uppdaterar positionen
         return finns(nod.left,value)
-    if value < nod.value:                               # Om värdet är större än värdet på noden kallas funktionen rekursivt och uppdaterar positionen
-    if value > nod.value:                                
+    if value > nod.value:                               # Om värdet är större än värdet på noden kallas funktionen rekursivt och uppdaterar positionen 
         return finns(nod.right,value)
 
 # Funktion som skriver ut trädet i inorder (minst till störst)
