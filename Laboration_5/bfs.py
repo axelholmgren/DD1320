@@ -1,7 +1,7 @@
 from bintreeFile import Bintree
 from linkedQFile import LinkedQ
 from parentnodeFile import ParentNode
-
+from solutionfoundFile import SolutionFound
 
 svenska = Bintree()  # Skapar ett tomt träd för svenska ord
 with open("/Users/axelholmgren/GitHub/DD1320/Laboration_4/word3.txt", "r", encoding="utf-8") as svenskfil:  # Läser in filen
@@ -21,28 +21,36 @@ def makechildren(nod, q, slutord):
             if ord in svenska and ord not in gamla: # Om ordet finns i svenska men inte i gamlaträdet. Om något av argumenten inte är upppfyllda läggs ordet in i gamla och lägger in i kön sist 
                 if ord == slutord:
                     print("Vägen till slutordet är: ")
-                    writechain(ParentNode(ord, nod)) 
-                    return True # Retrunerar true för att avsluta sökningen.
+                    writechain(ParentNode(ord, nod))
+                    raise SolutionFound 
                 else:
                     gamla.put(ord)
                     q.enqueue(ParentNode(ord, nod))
-    return False
 
 def writechain(slutordsnod):
     if slutordsnod.parent != None:
         writechain(slutordsnod.parent)
     print(slutordsnod.word)
+
+
 # Genomför en breddenförstsökning för att hitta den kortaste vägen och skriver ut om det finns en väg eller inte. Tar in avnändarinput.
 def main():
-    startord = input(str("Ange ett startord: "))
+    while True:
+        startord = input(str("Ange ett startord: "))
+        if startord in svenska:
+            break
+        else:
+            print("Ordet som angavs är inte giltigt, försök igen: ")
     slutord = input(str("Ange ett slutord: "))
     q = LinkedQ()  # Skapar en tom kö
     gamla.put(startord)
     q.enqueue(ParentNode(startord)) # Lägger till startordet i kön
-    while not q.isEmpty(): # Medans kön inte är tom, skapar en ny nod
-        nod = q.dequeue()
-        if makechildren(nod, q, slutord): # Om makechildren returnerar true har en väg hittats, om false forsätt skapa nya barn och fortsätt sökningen 
-            return None # returnerar None för att bryta loopen
-    print("Det finns ingen väg till", slutord)
+    try:
+        while not q.isEmpty(): # Medans kön inte är tom, skapar en ny nod
+            nod = q.dequeue()
+            makechildren(nod, q, slutord) # Om makechildren returnerar true har en väg hittats, om false forsätt skapa nya barn och fortsätt sökningen 
+        print("Det finns ingen väg till", slutord)
+    except SolutionFound:
+        pass
 
 main()
