@@ -16,7 +16,7 @@ gamla = Bintree()  # Skapar ett tomt träd för gamla ord
 
 def makechildren(nod, q, slutord):
     # Funktion som skapar barn, tar in startord, kön och slutord.
-    #  Ett barn skiljer endast med en bokastav från förälder.
+    # Ett barn skiljer endast med en bokastav från förälder.
     for i in range(3):  # indexerar för varje bokstav
         ord_list = list(nod.word.strip())
         # Lägger in en ny bokstav på den nuvarande postionen i ordet
@@ -37,6 +37,7 @@ def makechildren(nod, q, slutord):
 
 
 def writechain(slutordsnod):
+    # Om slutordet hittas skrivs kedjan av ord ut.
     if slutordsnod.parent is not None:
         writechain(slutordsnod.parent)
     print(slutordsnod.word)
