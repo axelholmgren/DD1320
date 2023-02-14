@@ -19,10 +19,12 @@ def makechildren(nod, q, slutord):
     # Ett barn skiljer endast med en bokastav från förälder.
     for i in range(3):  # indexerar för varje bokstav
         ord_list = list(nod.word.strip())
+
         # Lägger in en ny bokstav på den nuvarande postionen i ordet
         for j in "abcdefghijklmnopqrstuvwxyzåäö":
             ord_list[i] = j
             ord = "".join(ord_list)  # lägger ihop till en sträng
+
             # Om ordet finns i svenska men inte i gamlaträdet
             # Om något av argumenten inte är upppfyllda läggs ordet
             # in i gamla och lägger in i kön sist
