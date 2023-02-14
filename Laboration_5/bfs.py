@@ -15,14 +15,17 @@ gamla = Bintree()  # Skapar ett tomt träd för gamla ord
 
 
 def makechildren(nod, q, slutord):
-    # Funktion som skapar barn, tar in startord, kön och slutord. Ett barn skiljer endast med en bokastav från förälder.
+    # Funktion som skapar barn, tar in startord, kön och slutord.
+    #  Ett barn skiljer endast med en bokastav från förälder.
     for i in range(3):  # indexerar för varje bokstav
         ord_list = list(nod.word.strip())
         # Lägger in en ny bokstav på den nuvarande postionen i ordet
         for j in "abcdefghijklmnopqrstuvwxyzåäö":
             ord_list[i] = j
             ord = "".join(ord_list)  # lägger ihop till en sträng
-            # Om ordet finns i svenska men inte i gamlaträdet. Om något av argumenten inte är upppfyllda läggs ordet in i gamla och lägger in i kön sis
+            # Om ordet finns i svenska men inte i gamlaträdet
+            # Om något av argumenten inte är upppfyllda läggs ordet
+            # in i gamla och lägger in i kön sist
             if ord in svenska and ord not in gamla:
                 if ord == slutord:
                     print("Vägen till slutordet är: ")
@@ -34,13 +37,15 @@ def makechildren(nod, q, slutord):
 
 
 def writechain(slutordsnod):
-    if slutordsnod.parent != None:
+    if slutordsnod.parent is not None:
         writechain(slutordsnod.parent)
     print(slutordsnod.word)
 
 
 def main():
-    # Genomför en breddenförstsökning för att hitta den kortaste vägen och skriver ut om det finns en väg eller inte. Tar in avnändarinput.
+    # Genomför en breddenförstsökning för att hitta den kortaste vägen och
+    # skriver ut om det finns en väg eller inte.
+    # Tar in avnändarinput.
     while True:
         startord = input(str("Ange ett startord: "))
         if startord in svenska:
@@ -52,7 +57,8 @@ def main():
     gamla.put(startord)
     q.enqueue(ParentNode(startord))  # Lägger till startordet i kön
     try:
-        # Om makechildren returnerar true har en väg hittats, om false forsätt skapa nya barn och fortsätt sökningen
+        # Om makechildren returnerar true har en väg hittats, om false forsätt
+        # skapa nya barn och fortsätt sökningen
         while not q.isEmpty():  # Medans kön inte är tom, skapar en ny nod
             nod = q.dequeue()
             makechildren(nod, q, slutord)

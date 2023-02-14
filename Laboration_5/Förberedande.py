@@ -3,6 +3,7 @@ def utskrift(lista):
         utskrift(lista[1:])
         print(lista[0])
 
-lista = [1,2,3,4,5]
+
+lista = [1, 2, 3, 4, 5]
 
 print(utskrift(lista))
