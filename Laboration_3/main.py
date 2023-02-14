@@ -1,5 +1,6 @@
 from bintreeFile import Bintree
 
+
 def makeTree():
     tree = Bintree()
     data = input().strip()
@@ -7,6 +8,7 @@ def makeTree():
         tree.put(data)
         data = input().strip()
     return tree
+
 
 def searches(tree):
     findme = input().strip()
@@ -17,8 +19,10 @@ def searches(tree):
             print(findme, "not found")
         findme = input().strip()
 
+
 def main():
     tree = makeTree()
     searches(tree)
+
 
 main()

@@ -26,14 +26,12 @@ def makechildren(startord):
             ord = "".join(ord_list)
             if ord in svenska and ord not in gamla:
                 print(ord)
-                gamla.put(
-                    ord
-                )
+                gamla.put(ord)
 
 
 def main():
     startord = input(str("Ange ett startord: "))
-    slutord = input(str("Ange ett slutord: "))
+    # slutord = input(str("Ange ett slutord: "))
     makechildren(startord)
 
 

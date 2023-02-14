@@ -14,7 +14,7 @@ class LinkedQ:
 
     # Reurnerar sant/falskt beroende på om det finns något på första platsen i kön
     def isEmpty(self):
-        if self.__first == None:  # True om det inte finns ett första element
+        if self.__first is None:  # True om det inte finns ett första element
             return True
         else:
             return False
@@ -32,22 +32,25 @@ class LinkedQ:
             self.__last = Node(value)
             temp.next = self.__last
 
-    # Tar ut förstapekaren. Om next attributet  är None uppdatera förstapekaren till None
+    # Tar ut förstapekaren.
+    # Om next attributet  är None uppdatera förstapekaren till None
     # Om det finns något efter sätt de näst första pekaren till förstapekaren
     # Returnera värdet på det som låg på plats 1 i kön
     def dequeue(self):
         temp = self.__first
-        if temp.next == None:
+        if temp.next is None:
             self.__first = None
         else:
             self.__first = temp.next
         return temp.value
 
-    # Räknar antalet element tills att det nästa elementet är None (tomt), retunerar antalet element i kön
+    # Räknar antalet element tills att det nästa elementet är None (tomt),
+    # retunerar antalet element i kön
     def size(self):
         counter = 0
         node_count = self.__first.next
-        while node_count.next != None:  # Loopar tills att next pekaren pekar på None
+        # Loopar tills att next pekaren pekar på Non
+        while node_count.next is not None:
             counter += 1
             node_count = node_count.next
         return counter
