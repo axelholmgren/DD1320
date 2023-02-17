@@ -50,12 +50,12 @@ def main():
     # skriver ut om det finns en väg eller inte.
     # Tar in avnändarinput.
     while True:
-        startord = input(str("Ange ett startord: "))
+        startord = input("Ange ett startord: ")
         if startord in svenska:
             break
         else:
             print("Ordet som angavs är inte giltigt, försök igen: ")
-    slutord = input(str("Ange ett slutord: "))
+    slutord = input("Ange ett slutord: ")
     q = LinkedQ()  # Skapar en tom kö
     gamla.put(startord)
     q.enqueue(ParentNode(startord))  # Lägger till startordet i kön
