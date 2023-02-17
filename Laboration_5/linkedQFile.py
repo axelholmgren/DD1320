@@ -6,7 +6,6 @@ class Node:
 
 
 class LinkedQ:
-
     # Skapar en kö (tom)
     def __init__(self):  # Skapar kön  tom med None som första och sista element
         self.__first = None  # Objekt av klassen Node
@@ -14,10 +13,7 @@ class LinkedQ:
 
     # Reurnerar sant/falskt beroende på om det finns något på första platsen i kön
     def isEmpty(self):
-        if self.__first is None:  # True om det inte finns ett första element
-            return True
-        else:
-            return False
+        return self.__first is None
 
     # Tar in värdet value, kollar om kön är tom.
     # Om tom lägg till en Node och sätt både första och sista pekaren till Node
@@ -37,10 +33,7 @@ class LinkedQ:
     # Returnera värdet på det som låg på plats 1 i kön
     def dequeue(self):
         temp = self.__first
-        if temp.next is None:
-            self.__first = None
-        else:
-            self.__first = temp.next
+        self.__first = None if temp.next is None else temp.next
         return temp.value
 
     # Räknar antalet element tills att det nästa elementet är None (tomt),
@@ -48,9 +41,8 @@ class LinkedQ:
     def size(self):
         counter = 0
         node_count = self.__first.next
-        while (
-            node_count.next is not None
-        ):  # Loopar tills att next pekaren pekar på None
+        while node_count.next is not None:
+            # Loopar tills att next pekaren pekar på None
             counter += 1
             node_count = node_count.next
         return counter
