@@ -4,3 +4,6 @@ class track:
         self.låttid = låttid
         self.artistnamn = artistnamn
         self.låttitel = låttitel
+
+    def __lt__(self, other):
+        return self.artistnamn < other.artistnamn
