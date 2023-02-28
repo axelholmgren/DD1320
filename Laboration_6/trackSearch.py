@@ -32,7 +32,6 @@ def readtrack(test_len):
 
 
 def linjärsök(tracklist, sökt):
-    # sourcery skip: use-any, use-next
     for i in tracklist:
         if i.låttitel == sökt:
             return True
@@ -55,22 +54,21 @@ def binärsök(tracklist, sökt):
 def hashsök(hashtable, sökt):
     # Funktion för hashsökning. Tidskomplexitet 1
     try:
-        if (
-            hashtable.table[hash(sökt)] == sökt
-        ):  # Kollar om det ligger något sparat på hash(låttitel) index
+        # Kollar om det ligger något sparat på hash(låttitel) index
+        if hashtable.table[hash(sökt)] == sökt:
             return True
     except KeyError:
         return False
 
 
-def bubble_sort(list):
+def bubble_sort(tracklist):
     # Bubblesort funktion
     # Teoretisk tidskomplexitet: O(n^2)
-    for i in range(len(list)):
-        for j in range(0, len(list) - i - 1):
-            if list[j] > list[j + 1]:
-                list[j], list[j + 1] = list[j + 1], list[j]
-    return list
+    for i in range(len(tracklist)):
+        for j in range(0, len(tracklist) - i - 1):
+            if tracklist[j] > tracklist[j + 1]:
+                tracklist[j], tracklist[j + 1] = tracklist[j + 1], tracklist[j]
+    return tracklist
 
 
 # Funktion hämtad från DD1320 Föreläsnings 9: Sortering. Av Sten Andersson
@@ -114,7 +112,7 @@ def mergesort(data):
 def time_sort():
     # Funktion för att ta tid på sorteringsalgoritmer
     tracklist, hashtable = readtrack(1000)
-    bubbletid = timeit.timeit(stmt=lambda: bubble_sort(tracklist), number=100)
+    bubbletid = timeit.timeit(stmt=lambda: bubble_sort(tracklist), number=1)
     mergetid = timeit.timeit(stmt=lambda: mergesort(tracklist), number=1)
     print("Mergesorteringen tog", round(mergetid, 4), "sekunder")
     print("Bubblesorteringen tog", round(bubbletid, 4), "sekunder")
@@ -125,12 +123,12 @@ def main():
     tracklist, hashtable = readtrack(250000)
     tracklist_sorted = tracklist.copy()
     tracklist_sorted.sort()
-    linjtid = timeit.timeit(stmt=lambda: linjärsök(tracklist, tracklist[-1].låttitel), number=1000)
-    bintid = timeit.timeit(stmt=lambda: binärsök(tracklist, tracklist[-1].låttitel), number=1000)
+    # linjtid = timeit.timeit(stmt=lambda: linjärsök(tracklist, tracklist[-1].låttitel), number=1000)
+    bintid = timeit.timeit(stmt=lambda: binärsök(tracklist, tracklist[-2].låttitel), number=1000)
     hashtid = timeit.timeit(
         stmt=lambda: hashsök(hashtable, hashtable.table[hash(tracklist[-1].låttitel)]), number=1000
     )
-    print("Linjärsökningen tog", round(linjtid, 4), "sekunder")
+    # print("Linjärsökningen tog", round(linjtid, 4), "sekunder")
     print("Binärsökningen tog", round(bintid, 4), "sekunder")
     print("Hashsökningen tog", round(hashtid, 4), "sekunder")
 
