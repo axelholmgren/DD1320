@@ -18,6 +18,7 @@ def poke_create_table():  # /Dicthash beroende på vilken klass man vill använd
 
 def main():
     table = poke_create_table()
+    print(table.crash)
     print(table.search(input("Pokemon namn: ")))
 
 
