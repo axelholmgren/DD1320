@@ -40,10 +40,12 @@ def regel_andra_bok(kö):
 
 def regel_nummer(kö):
     num = kö.dequeue()
+    if num == "0":
+        raise SyntaxFel("För litet tal vid radslutet " + str(kö))
     sum = "0"
     while num in "0123456789":
         sum += num
-        if kö.peek() is None or int(sum[1]) == 0:
+        if kö.peek() is None:
             break
         num = kö.dequeue()
     if int(sum) >= 2:
