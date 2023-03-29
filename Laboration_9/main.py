@@ -26,7 +26,10 @@ def regel_grupp(kö):
         regel_molekyl(kö)
         if kö.peek() == ")":
             kö.dequeue()
-            regel_nummer(kö)
+            if kö.peek() is None:
+                raise SyntaxFel("Saknad siffra vid radslutet")
+            else:
+                regel_nummer(kö)
         else:
             raise SyntaxFel("Saknad högerparentes vid radslutet")  # kanke med str(kö)
     else:
@@ -230,5 +233,6 @@ def main():
     molekyl = input("Ange en molekyl: ")
     print(kolla_syntax(molekyl))
 """
+
 if __name__ == "__main__":
     main()

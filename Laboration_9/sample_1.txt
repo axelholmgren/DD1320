@@ -32,3 +32,4 @@ eee,Saknad stor bokstav vid radslutet eee
 0,Felaktig gruppstart vid radslutet 0
 -1,Felaktig gruppstart vid radslutet -1
 #,Felaktig gruppstart vid radslutet #
+(YO),Saknad siffra vid radslutet
