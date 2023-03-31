@@ -8,11 +8,12 @@ class Ruta:
         self.next = None
         self.down = None
 
+def main():
+    mol = Ruta(atom="Cl", num=2)
+    mg = Molgrafik()
+    mg.show(mol)
+    while True:
+        pass
 
-mol = Ruta(atom="Cl", num=2)
-mg = Molgrafik()
-mg.show(mol)
-
-while True:
-    print("hello")
-    pass
+if __name__ == '__main__':
+    main()

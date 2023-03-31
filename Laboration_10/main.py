@@ -223,6 +223,7 @@ def kolla_syntax(molekyl):
         mol = regel_formel(kö)
         mg = Molgrafik()
         mg.show(mol)
+        input('...')
         return "Formeln är syntaktiskt korrekt"
     except SyntaxFel as fel:
         if str(fel) == "Saknad stor bokstav vid radslutet ":
