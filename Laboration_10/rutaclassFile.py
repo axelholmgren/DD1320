@@ -1,6 +1,4 @@
 from molgrafik import *
-import sys
-import tkinter as tk
 
 
 class Ruta:
@@ -14,4 +12,7 @@ class Ruta:
 mol = Ruta(atom="Cl", num=2)
 mg = Molgrafik()
 mg.show(mol)
-pause = sys.stdin.readline()
+
+while True:
+    print("hello")
+    pass
