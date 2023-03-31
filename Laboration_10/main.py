@@ -1,5 +1,7 @@
 import sys
 from LinkedQueue import LinkedQ
+from molgrafik import *
+from rutaclassFile import Ruta
 
 
 class SyntaxFel(Exception):
@@ -9,36 +11,39 @@ class SyntaxFel(Exception):
 def regel_formel(kö):
     if kö.isEmpty() is True:
         raise SyntaxFel("Saknad gruppstart vid radslutet " + str(kö))
-    regel_molekyl(kö)
+    mol = regel_molekyl(kö)
     if kö.isEmpty() is False and kö.peek() == ")":
         raise SyntaxFel("Felaktig gruppstart vid radslutet " + str(kö))
+    return mol
 
 
 def regel_molekyl(kö):
-    regel_grupp(kö)
+    mol = regel_grupp(kö)
     if kö.isEmpty() is False and kö.peek() != ")":
-        regel_molekyl(kö)
+        mol.next = regel_molekyl(kö)
+    return mol
 
 
 def regel_grupp(kö):
+    rutan = Ruta()
     if kö.peek() == "(":
         kö.dequeue()
-        regel_molekyl(kö)
+        rutan.down = regel_molekyl(kö)
         if kö.peek() == ")":
             kö.dequeue()
+            rutan.atom = "( )"
             if kö.peek() is None:
                 raise SyntaxFel("Saknad siffra vid radslutet")
             else:
-                regel_nummer(kö)
+                rutan.num = regel_nummer(kö)
         else:
             raise SyntaxFel("Saknad högerparentes vid radslutet")  # kanke med str(kö)
     else:
-        regel_atom(kö)
+        rutan.atom = regel_atom(kö)
         if kö.isEmpty() is False:
             if kö.peek() in "0123456789":
-                regel_nummer(kö)
-            else:
-                return
+                rutan.num = regel_nummer(kö)
+    return rutan
 
 
 def regel_atom(kö):
@@ -162,6 +167,8 @@ def regel_atom(kö):
         "Lv",
     ]:
         raise SyntaxFel("Okänd atom vid radslutet " + str(kö))
+    else:
+        return bok
 
 
 def regel_första_bok(kö):
@@ -198,7 +205,7 @@ def regel_nummer(kö):
         if kö.peek() is None:
             break
     if int(total_sum) >= 2:
-        return
+        return int(total_sum)
     else:
         raise SyntaxFel("För litet tal vid radslutet " + str(kö))
 
@@ -213,7 +220,9 @@ def lagra_molekyl(molekyl):
 def kolla_syntax(molekyl):
     kö = lagra_molekyl(molekyl)
     try:
-        regel_formel(kö)
+        mol = regel_formel(kö)
+        mg = Molgrafik()
+        mg.show(mol)
         return "Formeln är syntaktiskt korrekt"
     except SyntaxFel as fel:
         if str(fel) == "Saknad stor bokstav vid radslutet ":
@@ -233,7 +242,6 @@ def main():
     molekyl = input("Ange en molekyl: ")
     print(kolla_syntax(molekyl))
 """
-"""
+
 if __name__ == "__main__":
     main()
-"""
