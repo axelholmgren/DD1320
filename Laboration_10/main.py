@@ -39,7 +39,7 @@ def regel_grupp(kö):
         else:
             raise SyntaxFel("Saknad högerparentes vid radslutet")  # kanke med str(kö)
     else:
-        rutan.atom = regel_atom(kö)
+        rutan.atom, rutan.weight = regel_atom(kö)
         if kö.isEmpty() is False:
             if kö.peek() in "0123456789":
                 rutan.num = regel_nummer(kö)
@@ -230,6 +230,27 @@ def kolla_syntax(molekyl):
             return str(fel) + str(molekyl)
         else:
             return str(fel)
+        
+def weight(mol):
+    try:
+        return sum_weight(regel_formel(mol))
+    
+    except SyntaxFel as fel:
+        if str(fel) == "Saknad stor bokstav vid radslutet ":
+            return str(fel) + str(mol)
+        else:
+            return str(fel)
+        
+def sum_weight(ruta):
+    vikt = 0
+    if ruta.down is not None:
+        vikt += sum_weight(ruta.down) * int(ruta.num)
+    elif ruta.next is not None:
+        vikt += sum_weight(ruta.next)
+    else:
+        vikt = int(ruta.atom) * int(ruta.num)
+        return vikt
+
 
 
 def main():
