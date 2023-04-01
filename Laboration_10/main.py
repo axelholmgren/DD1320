@@ -3,7 +3,7 @@ from LinkedQueue import LinkedQ
 from molgrafik import *
 from rutaclassFile import Ruta
 
-hej
+dev
 
 
 class SyntaxFel(Exception):
