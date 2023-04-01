@@ -3,6 +3,8 @@ from LinkedQueue import LinkedQ
 from molgrafik import *
 from rutaclassFile import Ruta
 
+hej
+
 
 class SyntaxFel(Exception):
     pass
@@ -223,24 +225,26 @@ def kolla_syntax(molekyl):
         mol = regel_formel(kö)
         mg = Molgrafik()
         mg.show(mol)
-        input('...')
+        input("...")
         return "Formeln är syntaktiskt korrekt"
     except SyntaxFel as fel:
         if str(fel) == "Saknad stor bokstav vid radslutet ":
             return str(fel) + str(molekyl)
         else:
             return str(fel)
-        
+
+
 def weight(mol):
     try:
         return sum_weight(regel_formel(mol))
-    
+
     except SyntaxFel as fel:
         if str(fel) == "Saknad stor bokstav vid radslutet ":
             return str(fel) + str(mol)
         else:
             return str(fel)
-        
+
+
 def sum_weight(ruta):
     vikt = 0
     if ruta.down is not None:
@@ -250,7 +254,6 @@ def sum_weight(ruta):
     else:
         vikt = int(ruta.atom) * int(ruta.num)
         return vikt
-
 
 
 def main():
