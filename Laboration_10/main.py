@@ -31,13 +31,12 @@ def regel_grupp(kö):
         rutan.down = regel_molekyl(kö)
         if kö.peek() == ")":
             kö.dequeue()
-            rutan.atom = "( )"
             if kö.peek() is None:
                 raise SyntaxFel("Saknad siffra vid radslutet")
             else:
                 rutan.num = regel_nummer(kö)
         else:
-            raise SyntaxFel("Saknad högerparentes vid radslutet")  # kanke med str(kö)
+            raise SyntaxFel("Saknad högerparentes vid radslutet")
     else:
         rutan.atom, rutan.weight = regel_atom(kö)
         if kö.isEmpty() is False:
@@ -166,9 +165,9 @@ def regel_atom(kö):
         "Fl,289",
         "Lv,293",
     ]:
-        raise SyntaxFel("Okänd atom vid radslutet " + str(kö))
-    else:
-        return bok
+        if rad.split(",")[0] == bok:
+            return bok, float(rad.split(",")[1])
+    raise SyntaxFel("Okänd atom vid radslutet " + str(kö))
 
 
 def regel_första_bok(kö):
@@ -221,43 +220,35 @@ def kolla_syntax(molekyl):
     kö = lagra_molekyl(molekyl)
     try:
         mol = regel_formel(kö)
-        mg = Molgrafik()
-        mg.show(mol)
-        input("...")
-        return "Formeln är syntaktiskt korrekt"
+        # mg = Molgrafik()
+        # mg.show(mol)
+        # input("...")
+        return "Formeln är syntaktiskt korrekt", mol
     except SyntaxFel as fel:
         if str(fel) == "Saknad stor bokstav vid radslutet ":
-            return str(fel) + str(molekyl)
+            return str(fel) + str(molekyl), None
         else:
-            return str(fel)
+            return str(fel), None
 
 
-def weight(mol):
-    try:
-        return sum_weight(regel_formel(mol))
-
-    except SyntaxFel as fel:
-        if str(fel) == "Saknad stor bokstav vid radslutet ":
-            return str(fel) + str(mol)
-        else:
-            return str(fel)
-
-
-def sum_weight(ruta):
+def weight(ruta):
     vikt = 0
     if ruta.down is not None:
-        vikt += sum_weight(ruta.down) * int(ruta.num)
-    elif ruta.next is not None:
-        vikt += sum_weight(ruta.next)
-    else:
-        vikt = int(ruta.atom) * int(ruta.num)
-        return vikt
+        vikt += weight(ruta.down) * int(ruta.num)
+    if ruta.next is not None:
+        vikt += weight(ruta.next)
+    if ruta.atom != "( )":
+        vikt += ruta.weight * ruta.num
+    return vikt
 
 
 def main():
     molekyl = sys.stdin.readline().strip()
     while molekyl != "#":
-        print(kolla_syntax(molekyl))
+        syntax, mol = kolla_syntax(molekyl)
+        print(syntax)
+        if syntax == "Formeln är syntaktiskt korrekt":
+            print(weight(mol))
         molekyl = sys.stdin.readline().strip()
 
 
