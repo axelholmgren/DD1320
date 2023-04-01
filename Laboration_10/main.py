@@ -31,7 +31,6 @@ def regel_grupp(kö):
         rutan.down = regel_molekyl(kö)
         if kö.peek() == ")":
             kö.dequeue()
-            rutan.atom = "( )"
             if kö.peek() is None:
                 raise SyntaxFel("Saknad siffra vid radslutet")
             else:
@@ -39,11 +38,11 @@ def regel_grupp(kö):
         else:
             raise SyntaxFel("Saknad högerparentes vid radslutet")
     else:
-        rutan.atom, vikt = regel_atom(kö)
+        rutan.atom, rutan.weight = regel_atom(kö)
         if kö.isEmpty() is False:
             if kö.peek() in "0123456789":
-                (rutan.num,) = regel_nummer(kö)
-    return rutan, int(vikt) * rutan.num
+                rutan.num = regel_nummer(kö)
+    return rutan
 
 
 def regel_atom(kö):
@@ -166,9 +165,8 @@ def regel_atom(kö):
         "Fl,289",
         "Lv,293",
     ]:
-        atom = rad.split(",")
-        if bok in atom[0]:
-            return bok, atom[1]
+        if rad.split(",")[0] == bok:
+            return bok, float(rad.split(",")[1])
     raise SyntaxFel("Okänd atom vid radslutet " + str(kö))
 
 
@@ -225,23 +223,32 @@ def kolla_syntax(molekyl):
         mg = Molgrafik()
         mg.show(mol)
         input("...")
-        return "Formeln är syntaktiskt korrekt"
+        return "Formeln är syntaktiskt korrekt", mol
     except SyntaxFel as fel:
         if str(fel) == "Saknad stor bokstav vid radslutet ":
-            return str(fel) + str(molekyl)
+            return str(fel) + str(molekyl), None
         else:
-            return str(fel)
+            return str(fel), None
 
 
-def weight(mol):
-    rootBox = regel_formel(q)
-    counter(rootBox)
+def weight(ruta):
+    vikt = 0
+    if ruta.down is not None:
+        vikt += weight(ruta.down) * int(ruta.num)
+    if ruta.next is not None:
+        vikt += weight(ruta.next)
+    if ruta.atom != "( )":
+        vikt += ruta.weight * ruta.num
+    return vikt
 
 
 def main():
     molekyl = sys.stdin.readline().strip()
     while molekyl != "#":
-        print(kolla_syntax(molekyl))
+        syntax, mol = kolla_syntax(molekyl)
+        print(syntax)
+        if syntax == "Formeln är syntaktiskt korrekt":
+            print(weight(mol))
         molekyl = sys.stdin.readline().strip()
 
 
